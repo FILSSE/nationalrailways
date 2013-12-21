@@ -10,6 +10,7 @@
  */
 package gui;
 
+import nationalrailways.MyController;
 import gui.AdminWindow;
 import businesslogic.LoginController;
 
@@ -111,7 +112,7 @@ public class LoginWindow extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
  //       System.out.println(jTextField1.getText()+" "+jTextField2.getText());
-        boolean success=LoginController.checkLogin(jTextField1.getText(),jPasswordField1.getText());
+        boolean success=MyController.context.getLoginController().checkLogin(jTextField1.getText(),jPasswordField1.getText());
         if(success){
             jLabel3.setText("");
             if(jTextField1.getText().compareTo("admin")==0){

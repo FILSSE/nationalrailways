@@ -10,7 +10,7 @@
  */
 package gui;
 
-import businesslogic.BookingController;
+import nationalrailways.MyController;
 
 /**
  *
@@ -22,12 +22,12 @@ public class PrintTicketWindow extends javax.swing.JFrame {
     public PrintTicketWindow(String status,String cnp) {
         initComponents();
         if(status.compareTo("single")==0){
-            jLabel2.setText(String.valueOf(BookingController.getMyTicket().getRoute().getTrain().getId()));
-            jLabel5.setText(BookingController.getMyTicket().getRoute().getTrain().getType());
-            jLabel6.setText(String.valueOf(BookingController.getMyTicket().getSeat().getNumber()));
-            jLabel9.setText(BookingController.getMyTicket().getSeat().getPlacement());
-            jLabel10.setText(BookingController.getMyTicket().getSeat().getDirection());
-            BookingController.updateRouteTicket();
+            jLabel2.setText(String.valueOf(MyController.context.getBookingController().getMyTicket().getRoute().getTrain().getId()));
+            jLabel5.setText(MyController.context.getBookingController().getMyTicket().getRoute().getTrain().getType());
+            jLabel6.setText(String.valueOf(MyController.context.getBookingController().getMyTicket().getSeat().getNumber()));
+            jLabel9.setText(MyController.context.getBookingController().getMyTicket().getSeat().getPlacement());
+            jLabel10.setText(MyController.context.getBookingController().getMyTicket().getSeat().getDirection());
+            MyController.context.getBookingController().updateRouteTicket(MyController.context.getBookingController().getMyTicket());
         }
  /*       if(status.compareTo("double1")==0){
             jLabel2.setText(String.valueOf(BookingController.getMyTickets().get(0).getRoute().getTrain().getId()));
@@ -37,12 +37,12 @@ public class PrintTicketWindow extends javax.swing.JFrame {
             jLabel10.setText(BookingController.getMyTickets().get(0).getSeat().getDirection());
         } */
         if(status.compareTo("double")==0){
-            jLabel2.setText(String.valueOf(BookingController.getMyTickets().get(0).getRoute().getTrain().getId())+"|"+String.valueOf(BookingController.getMyTickets().get(1).getRoute().getTrain().getId()));
-            jLabel5.setText(BookingController.getMyTickets().get(0).getRoute().getTrain().getType()+"|"+BookingController.getMyTickets().get(1).getRoute().getTrain().getType());
-            jLabel6.setText(String.valueOf(BookingController.getMyTickets().get(0).getSeat().getNumber())+"|"+String.valueOf(BookingController.getMyTickets().get(1).getSeat().getNumber()));
-            jLabel9.setText(BookingController.getMyTickets().get(0).getSeat().getPlacement()+"|"+BookingController.getMyTickets().get(1).getSeat().getPlacement());
-            jLabel10.setText(BookingController.getMyTickets().get(0).getSeat().getDirection()+"|"+BookingController.getMyTickets().get(1).getSeat().getDirection());
-            BookingController.updateRouteTickets();
+            jLabel2.setText(String.valueOf(MyController.context.getBookingController().getMyTickets().get(0).getRoute().getTrain().getId())+"|"+String.valueOf(MyController.context.getBookingController().getMyTickets().get(1).getRoute().getTrain().getId()));
+            jLabel5.setText(MyController.context.getBookingController().getMyTickets().get(0).getRoute().getTrain().getType()+"|"+MyController.context.getBookingController().getMyTickets().get(1).getRoute().getTrain().getType());
+            jLabel6.setText(String.valueOf(MyController.context.getBookingController().getMyTickets().get(0).getSeat().getNumber())+"|"+String.valueOf(MyController.context.getBookingController().getMyTickets().get(1).getSeat().getNumber()));
+            jLabel9.setText(MyController.context.getBookingController().getMyTickets().get(0).getSeat().getPlacement()+"|"+MyController.context.getBookingController().getMyTickets().get(1).getSeat().getPlacement());
+            jLabel10.setText(MyController.context.getBookingController().getMyTickets().get(0).getSeat().getDirection()+"|"+MyController.context.getBookingController().getMyTickets().get(1).getSeat().getDirection());
+            MyController.context.getBookingController().updateRouteTickets();
         }
         if(cnp.compareTo("")==0){
             jLabel11.setVisible(false);
@@ -50,10 +50,10 @@ public class PrintTicketWindow extends javax.swing.JFrame {
         }
         else{
             if(status.compareTo("single")==0){
-                jLabel12.setText(BookingController.getMyTicket().getClient().getIdc().getCNP());
+                jLabel12.setText(MyController.context.getBookingController().getMyTicket().getClient().getIdc().getCNP());
             }
             if(status.compareTo("double")==0){
-                jLabel12.setText(BookingController.getMyTickets().get(0).getClient().getIdc().getCNP());
+                jLabel12.setText(MyController.context.getBookingController().getMyTickets().get(0).getClient().getIdc().getCNP());
             }
         }
     }

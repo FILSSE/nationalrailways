@@ -15,6 +15,8 @@ import domain.Route;
 import domain.RouteList;
 import javax.swing.table.DefaultTableModel;
 
+import nationalrailways.MyController;
+
 /**
  *
  * @author AndreiM
@@ -33,7 +35,7 @@ public class ModifyRouteWindow extends javax.swing.JFrame {
         while(model.getRowCount()!=0){
             model.removeRow(model.getRowCount()-1);
         }
-        RouteList rl=ModifyRouteController.getRouteList();
+        RouteList rl=MyController.context.getModifyRouteController().getRouteList();
         for(Route r:rl.getListRoutes()){
             model.addRow(new Object[]{r.getDepartureTime(),r.getArrivalTime(),r.getDistance(),r.getListStation().getListStation().get(0).getName(),r.getListStation().getListStation().get(1).getName(),r.getTrain().getType(),r.getTrain().getNoSeats(),r.getTrain().getId()});          
         }
@@ -137,7 +139,7 @@ public class ModifyRouteWindow extends javax.swing.JFrame {
             System.out.println(i+":"+jTable1.getValueAt(indexSelected, i).getClass());
         } */
         if(indexSelected!=(-1)){
-            ModifyRouteController.updateRoute(jTable1.getValueAt(indexSelected, 0).toString(),jTable1.getValueAt(indexSelected,1 ).toString(),Integer.parseInt(jTable1.getValueAt(indexSelected, 2).toString()),jTable1.getValueAt(indexSelected, 3).toString(),(String)jTable1.getValueAt(indexSelected, 4),jTable1.getValueAt(indexSelected, 5).toString(),Integer.parseInt(jTable1.getValueAt(indexSelected, 6).toString()),Integer.valueOf(jTable1.getValueAt(indexSelected, 7).toString()));
+        	MyController.context.getModifyRouteController().updateRoute(jTable1.getValueAt(indexSelected, 0).toString(),jTable1.getValueAt(indexSelected,1 ).toString(),Integer.parseInt(jTable1.getValueAt(indexSelected, 2).toString()),jTable1.getValueAt(indexSelected, 3).toString(),(String)jTable1.getValueAt(indexSelected, 4),jTable1.getValueAt(indexSelected, 5).toString(),Integer.parseInt(jTable1.getValueAt(indexSelected, 6).toString()),Integer.valueOf(jTable1.getValueAt(indexSelected, 7).toString()));
             refreshTable();
         }
     }//GEN-LAST:event_jButton1ActionPerformed

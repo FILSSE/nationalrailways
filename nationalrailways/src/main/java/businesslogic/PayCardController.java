@@ -8,32 +8,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+import services.DatabaseTemplate;
 /**
  *
  * @author AndreiM
  */
 public class PayCardController {
     
-    public static boolean checkCard(String cnp,int pin){
- //       System.out.println(username+" "+password);
-        String url="jdbc:derby://localhost:1527/NationalRailways";
-        try{
-            Connection con=DriverManager.getConnection(url,"andrei","andrei");
-            Statement instr=con.createStatement();
-            String sql="SELECT * FROM app.customer l WHERE cnp='"+cnp+"' AND pin="+pin;
-       //     System.out.println(sql);
-            ResultSet rs=instr.executeQuery(sql);
-            if(rs.next()==false)
-                return false;
-            rs.close();
-            instr.close();
-            con.close();
-        }
-        catch(Exception e){
-            System.out.println("Exception:"+e.getMessage());
-            return false;
-        }
-        return true;
+	private final DatabaseTemplate databaseTemplate;
+	public PayCardController(DatabaseTemplate databaseTemplate) {
+		this.databaseTemplate = databaseTemplate;
+	}
+    public  boolean checkCard(String cnp,int pin){
+    	return this.databaseTemplate.checkCard(cnp, pin);
     }
     
 }

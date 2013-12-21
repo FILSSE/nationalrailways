@@ -10,13 +10,15 @@
  */
 package gui;
 
-import businesslogic.BookingController;
+import java.util.ArrayList;
+
+import javax.swing.table.DefaultTableModel;
+
+import nationalrailways.MyController;
 import domain.Customer;
 import domain.Discount;
 import domain.Route;
 import domain.Ticket;
-import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -384,7 +386,7 @@ public class BookingWindow extends javax.swing.JFrame {
         
         if(intermediaryStation.compareTo("")==0){
             status="single";
-            ArrayList<Route> listRoutes=BookingController.checkTrain(jTextField1.getText(), jTextField2.getText(),trainType,departureHourLow,departureHourHigh,arrivalHourLow,arrivalHourHigh);
+            ArrayList<Route> listRoutes=MyController.context.getBookingController().checkTrain(jTextField1.getText(), jTextField2.getText(),trainType,departureHourLow,departureHourHigh,arrivalHourLow,arrivalHourHigh);
             DefaultTableModel model=(DefaultTableModel) jTable1.getModel();
             int maxPrice=10000;
             if(jTextField3.getText().compareTo("")!=0){
@@ -398,7 +400,7 @@ public class BookingWindow extends javax.swing.JFrame {
             }
             if(listRoutes==null){
         //       System.out.println("NULL");
-               String intermediateStation=BookingController.checkIntermediateStation(jTextField1.getText(), jTextField2.getText());
+               String intermediateStation=MyController.context.getBookingController().checkIntermediateStation(jTextField1.getText(), jTextField2.getText());
                if(intermediateStation==null){
                     jLabel10.setText("No match was found. There does not exist a composed entry");
                }
@@ -426,14 +428,14 @@ public class BookingWindow extends javax.swing.JFrame {
                 }
                 Customer myCustomer=null;
                 if(view.compareTo("cashier")==0){
-                    myCustomer=BookingController.getCustomer(cnp);
+                    myCustomer=MyController.context.getBookingController().getCustomer(cnp);
                 }
                 if(myCustomer==null){
                     System.out.println("NULL");
                 }
           //      System.out.println(myCustomer.toString());
-                myTickets=BookingController.createTickets(jComboBox2.getSelectedItem().toString(),jComboBox3.getSelectedItem().toString(),jComboBox4.getSelectedItem().toString(),maxPrice,myDiscount,myCustomer);
-        //        System.out.println(BookingController.getMyRouteList().size());
+                myTickets=MyController.context.getBookingController().createTickets(jComboBox2.getSelectedItem().toString(),jComboBox3.getSelectedItem().toString(),jComboBox4.getSelectedItem().toString(),maxPrice,myDiscount,myCustomer);
+        //        System.out.println(MyController.context.getBookingController().getMyRouteList().size());
        //         System.out.println(myTickets.size());
                 int index=0;
                 for(Route r:listRoutes){
@@ -446,8 +448,8 @@ public class BookingWindow extends javax.swing.JFrame {
         }
         else{
             status="double";
-            ArrayList<Route> listRoutes=BookingController.checkTrain(jTextField1.getText(), intermediaryStation,trainType,departureHourLow,departureHourHigh,0,24);
-            ArrayList<Route> addRoutes=BookingController.checkTrain(intermediaryStation, jTextField2.getText(),trainType,0,24,arrivalHourLow,arrivalHourHigh);
+            ArrayList<Route> listRoutes=MyController.context.getBookingController().checkTrain(jTextField1.getText(), intermediaryStation,trainType,departureHourLow,departureHourHigh,0,24);
+            ArrayList<Route> addRoutes=MyController.context.getBookingController().checkTrain(intermediaryStation, jTextField2.getText(),trainType,0,24,arrivalHourLow,arrivalHourHigh);
             if(addRoutes!=null){
          //       System.out.println(addRoutes);
                 if(listRoutes==null){
@@ -458,7 +460,7 @@ public class BookingWindow extends javax.swing.JFrame {
                 }
             }
             if(listRoutes!=null)
-                BookingController.setMyRouteList(listRoutes);
+                MyController.context.getBookingController().setMyRouteList(listRoutes);
             DefaultTableModel model=(DefaultTableModel) jTable1.getModel();
             int maxPrice=10000;
             if(jTextField3.getText().compareTo("")!=0){
@@ -492,9 +494,9 @@ public class BookingWindow extends javax.swing.JFrame {
                 }
                 Customer myCustomer=null;
                 if(view.compareTo("cashier")==0){
-                    myCustomer=BookingController.getCustomer(cnp);
+                    myCustomer=MyController.context.getBookingController().getCustomer(cnp);
                 }
-                myTickets=BookingController.createTickets(jComboBox2.getSelectedItem().toString(),jComboBox3.getSelectedItem().toString(),jComboBox4.getSelectedItem().toString(),maxPrice,myDiscount,myCustomer);
+                myTickets=MyController.context.getBookingController().createTickets(jComboBox2.getSelectedItem().toString(),jComboBox3.getSelectedItem().toString(),jComboBox4.getSelectedItem().toString(),maxPrice,myDiscount,myCustomer);
                 int index=0;
                 for(Route r:listRoutes){
                     model.addRow(new Object[]{r.getDepartureTime(),r.getArrivalTime(),r.getListStation().getListStation().get(0).getName(),r.getListStation().getListStation().get(1).getName(),r.getTrain().getType(),r.getDistance(),myTickets.get(index).getPrice()});          
@@ -517,14 +519,14 @@ public class BookingWindow extends javax.swing.JFrame {
             }
             if(status.compareTo("single")==0){
           //      System.out.println(jTable1.getSelectedRow());
-                BookingController.setSelectedTicket(jTable1.getSelectedRow());                
+                MyController.context.getBookingController().setSelectedTicket(jTable1.getSelectedRow());                
                 PaymentMethodWindow myPayment=new PaymentMethodWindow(status,myCnp,cnp);
                 myPayment.setVisible(true);
             }
             if(status.compareTo("double")==0){
          //       System.out.println(jTable1.getSelectedRow());
                 int [] selectedRows=jTable1.getSelectedRows();
-                BookingController.setSelectedTickets(selectedRows[0],selectedRows[1]);
+                MyController.context.getBookingController().setSelectedTickets(selectedRows[0],selectedRows[1]);
                 PaymentMethodWindow myPayment=new PaymentMethodWindow(status,myCnp,cnp);
                 myPayment.setVisible(true);
             }
@@ -537,14 +539,14 @@ public class BookingWindow extends javax.swing.JFrame {
             }
             if(status.compareTo("single")==0){
           //      System.out.println(jTable1.getSelectedRow());
-                BookingController.setSelectedTicket(jTable1.getSelectedRow());                
+                MyController.context.getBookingController().setSelectedTicket(jTable1.getSelectedRow());                
                 PrintTicketWindow myPrint=new PrintTicketWindow(status,myCnp);
                 myPrint.setVisible(true);
             }
             if(status.compareTo("double")==0){
          //       System.out.println(jTable1.getSelectedRow());
                 int [] selectedRows=jTable1.getSelectedRows();
-                BookingController.setSelectedTickets(selectedRows[0],selectedRows[1]);
+                MyController.context.getBookingController().setSelectedTickets(selectedRows[0],selectedRows[1]);
                 PrintTicketWindow myPrint1=new PrintTicketWindow(status,myCnp);
                 myPrint1.setVisible(true);
         /*        PrintTicketWindow myPrint1=new PrintTicketWindow("double1");

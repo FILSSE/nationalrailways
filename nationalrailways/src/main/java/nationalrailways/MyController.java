@@ -10,6 +10,7 @@
  */
 package nationalrailways;
 
+import businesslogic.ApplicationContext;
 import gui.LoginWindow;
 import gui.BookingWindow;
 
@@ -18,6 +19,7 @@ import gui.BookingWindow;
  * @author AndreiM
  */
 public class MyController extends javax.swing.JFrame {
+	public static ApplicationContext context = new ApplicationContext();
 
     /** Creates new form MyController */
     public MyController() {

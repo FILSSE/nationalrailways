@@ -10,7 +10,7 @@
  */
 package gui;
 
-import businesslogic.CashierController;
+import nationalrailways.MyController;
 
 /**
  *
@@ -130,7 +130,7 @@ public class CashierWindow extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         jLabel3.setText("");
-        boolean success=CashierController.checkCustomer(jTextField1.getText());
+        boolean success=MyController.context.getCashierController().checkCustomer(jTextField1.getText());
         if(success){
         //    System.out.println("success");
             BookingWindow bw=new BookingWindow("cashier",jTextField1.getText());

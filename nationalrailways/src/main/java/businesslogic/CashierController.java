@@ -16,7 +16,7 @@ import java.sql.Statement;
 public class CashierController {
     
     
-    public static boolean checkCustomer(String cnp){
+    public  boolean checkCustomer(String cnp){
  //       System.out.println(username+" "+password);
         String url="jdbc:derby://localhost:1527/NationalRailways";
         try{

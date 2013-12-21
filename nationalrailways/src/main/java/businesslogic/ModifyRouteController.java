@@ -21,7 +21,7 @@ public class ModifyRouteController {
     
     private static RouteList myRouteList;
     
-    public static RouteList getRouteList(){
+    public  RouteList getRouteList(){
         myRouteList=new RouteList();
         RouteList rl=new RouteList();
         String url="jdbc:derby://localhost:1527/NationalRailways";
@@ -60,7 +60,7 @@ public class ModifyRouteController {
         return rl;
     }
 
-    public static boolean updateRoute(String departureTime,String arrivalTime,int distance,String departureStation,String arrivalStation,String trainType,int seats,int idTrain){
+    public  boolean updateRoute(String departureTime,String arrivalTime,int distance,String departureStation,String arrivalStation,String trainType,int seats,int idTrain){
         String url="jdbc:derby://localhost:1527/NationalRailways";
         try{
             Connection con=DriverManager.getConnection(url,"andrei","andrei");
@@ -77,11 +77,11 @@ public class ModifyRouteController {
         return true;
     }
     
-    public static RouteList getMyRouteList() {
+    public  RouteList getMyRouteList() {
         return myRouteList;
     }
 
-    public static void setMyRouteList(RouteList myRouteList) {
+    public  void setMyRouteList(RouteList myRouteList) {
         ModifyRouteController.myRouteList = myRouteList;
     }
     

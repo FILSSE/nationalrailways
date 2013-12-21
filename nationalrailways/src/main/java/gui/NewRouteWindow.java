@@ -10,6 +10,7 @@
  */
 package gui;
 
+import nationalrailways.MyController;
 import businesslogic.NewRouteController;
 import gui.AdminWindow;
 
@@ -216,7 +217,7 @@ public class NewRouteWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        boolean success=NewRouteController.addNewRoute(jTextField1.getText(), jTextField2.getText(), Integer.parseInt(jTextField3.getText()), jTextField4.getText(), jTextField5.getText(), jTextField6.getText(), Integer.parseInt(jTextField7.getText()),Integer.parseInt(jTextField8.getText()));
+        boolean success=MyController.context.getNewRouteController().addNewRoute(jTextField1.getText(), jTextField2.getText(), Integer.parseInt(jTextField3.getText()), jTextField4.getText(), jTextField5.getText(), jTextField6.getText(), Integer.parseInt(jTextField7.getText()),Integer.parseInt(jTextField8.getText()));
         if(success){
             AdminWindow admin=new AdminWindow();
             admin.setVisible(true);

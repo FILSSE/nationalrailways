@@ -18,9 +18,12 @@ import domain.Train;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Random;
+
+import services.DatabaseTemplate;
 
 /**
  *
@@ -28,17 +31,23 @@ import java.util.Random;
  */
 public class BookingController {
     
-    private static ArrayList<Route> myRouteList;
-    private static ArrayList<Ticket> listTicket;
-    private static Ticket myTicket;
-    private static ArrayList<Ticket> myTickets;
-    
-    public static void setSelectedTicket(int indexSelected){
+    private ArrayList<Route> myRouteList=new ArrayList<Route>();;
+    private ArrayList<Ticket> listTicket;
+    private Ticket myTicket;
+    private ArrayList<Ticket> myTickets;
+
+	private final DatabaseTemplate databaseTemplate;
+	
+	public BookingController(DatabaseTemplate databaseTemplate) {
+		this.databaseTemplate = databaseTemplate;
+	}
+	
+    public void setSelectedTicket(int indexSelected){
         myTicket=listTicket.get(indexSelected);
         myTicket.computeCost();
     }
     
-    public static void setSelectedTickets(int index1,int index2){
+    public void setSelectedTickets(int index1,int index2){
         myTickets=new ArrayList<Ticket>();
         listTicket.get(index1).computeCost();
         listTicket.get(index2).computeCost();
@@ -46,31 +55,25 @@ public class BookingController {
         myTickets.add(listTicket.get(index2));
     }
     
-    public static boolean updateRouteTicket(){
-        String url="jdbc:derby://localhost:1527/NationalRailways";
+    public int updateRouteTicket(Ticket myTicket) {
         try{
-            Connection con=DriverManager.getConnection(url,"andrei","andrei");
-            Statement instr=con.createStatement();
-            String sql1="SELECT availableseats FROM app.route l WHERE idtrain="+myTicket.getRoute().getTrain().getId()+" AND departuretime='"+myTicket.getRoute().getDepartureTime()+"'";
-            ResultSet rs=instr.executeQuery(sql1);
-            rs.next();
-            int available=Integer.parseInt(rs.getString(1));
-            available=available-1;
-            rs.close();
+            String sql1="SELECT availableseats FROM app.route l WHERE idtrain="
+            		+myTicket.getRoute().getTrain().getId()
+            		+" AND departuretime='"
+            		+myTicket.getRoute().getDepartureTime()+"'";
+            
+            int available=databaseTemplate.getInt(sql1);
+			available=available-1;
             String sql2="UPDATE app.route SET availableseats="+available+" WHERE idtrain="+myTicket.getRoute().getTrain().getId()+" AND departuretime='"+myTicket.getRoute().getDepartureTime()+"'";
-            instr.executeUpdate(sql2);
-     //       String sql2="UPDATE app.route SET departuretime='"+departureTime+"', arrivaltime = '"+arrivalTime+"', distance = "+distance+", departurestation = '"+departureStation+"', arrivalstation = '"+arrivalStation+"', traintype = '"+trainType+"', seats="+seats+" WHERE idtrain="+idTrain;
-            instr.close();
-            con.close();
-            return true;
-        }
-        catch(Exception e){
+            databaseTemplate.runSql(sql2);
+            return available;
+        } catch(SQLException e){
             System.out.println("Exception:"+e.getMessage());
-            return false;
+            return -1;
         }  
     }
     
-    public static boolean updateRouteTickets(){
+    public  boolean updateRouteTickets(){
         String url="jdbc:derby://localhost:1527/NationalRailways";
         try{
             Connection con=DriverManager.getConnection(url,"andrei","andrei");
@@ -103,7 +106,7 @@ public class BookingController {
         }  
     }
     
-    public static ArrayList<Ticket> createTickets(String selectedClass,String placement,String direction,int maxPrice,Discount discount,Customer customer){
+    public  ArrayList<Ticket> createTickets(String selectedClass,String placement,String direction,int maxPrice,Discount discount,Customer customer){
         listTicket=new ArrayList<Ticket>();
         ArrayList<Route> removeRoutes=new ArrayList<Route>();
         for(Route r:myRouteList){
@@ -139,7 +142,7 @@ public class BookingController {
         return listTicket;
     }
      
-    public static String checkIntermediateStation(String departureStation,String arrivalStation ){
+    public  String checkIntermediateStation(String departureStation,String arrivalStation ){
         String intermediateStation=null;
         String url="jdbc:derby://localhost:1527/NationalRailways";
         myRouteList=null;
@@ -177,7 +180,7 @@ public class BookingController {
         }  
     }
     
-    public static Customer getCustomer(String cnp){
+    public  Customer getCustomer(String cnp){
         String url="jdbc:derby://localhost:1527/NationalRailways";
         Customer ticketCustomer=null;
         try{
@@ -209,7 +212,7 @@ public class BookingController {
         } 
     }
     
-    public static ArrayList<Route> checkTrain(String departureStation,String arrivalStation,String desiredType,int depLow,int depHigh,int arrivLow,int arrivHigh){
+    public  ArrayList<Route> checkTrain(String departureStation,String arrivalStation,String desiredType,int depLow,int depHigh,int arrivLow,int arrivHigh){
         String url="jdbc:derby://localhost:1527/NationalRailways";
         myRouteList=null;
         try{
@@ -267,36 +270,36 @@ public class BookingController {
         }  
     }
 
-    public static ArrayList<Ticket> getListTicket() {
+    public  ArrayList<Ticket> getListTicket() {
         return listTicket;
     }
 
-    public static void setListTicket(ArrayList<Ticket> listTicket) {
-        BookingController.listTicket = listTicket;
+    public  void setListTicket(ArrayList<Ticket> listTicket) {
+        this.listTicket = listTicket;
     }
 
-    public static ArrayList<Route> getMyRouteList() {
+    public  ArrayList<Route> getMyRouteList() {
         return myRouteList;
     }
 
-    public static void setMyRouteList(ArrayList<Route> myRouteList) {
-        BookingController.myRouteList = myRouteList;
+    public  void setMyRouteList(ArrayList<Route> myRouteList) {
+        this.myRouteList = myRouteList;
     }
 
-    public static Ticket getMyTicket() {
+    public  Ticket getMyTicket() {
         return myTicket;
     }
 
-    public static void setMyTicket(Ticket myTicket) {
-        BookingController.myTicket = myTicket;
+    public  void setMyTicket(Ticket myTicket) {
+        this.myTicket = myTicket;
     }
 
-    public static ArrayList<Ticket> getMyTickets() {
+    public  ArrayList<Ticket> getMyTickets() {
         return myTickets;
     }
 
-    public static void setMyTickets(ArrayList<Ticket> myTickets) {
-        BookingController.myTickets = myTickets;
+    public  void setMyTickets(ArrayList<Ticket> myTickets) {
+        this.myTickets = myTickets;
     }
     
     

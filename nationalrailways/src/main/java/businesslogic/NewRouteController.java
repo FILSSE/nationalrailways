@@ -14,7 +14,7 @@ import java.sql.Statement;
  */
 public class NewRouteController {
     
-    public static boolean addNewRoute(String departureTime, String arrivalTime, int distance, String departureStation, String arrivalStation, String trainType,int seats,int idTrain){
+    public  boolean addNewRoute(String departureTime, String arrivalTime, int distance, String departureStation, String arrivalStation, String trainType,int seats,int idTrain){
         String url="jdbc:derby://localhost:1527/NationalRailways";
         try{
             Connection con=DriverManager.getConnection(url,"andrei","andrei");

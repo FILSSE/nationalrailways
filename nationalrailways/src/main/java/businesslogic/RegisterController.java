@@ -13,7 +13,7 @@ import java.sql.Statement;
  */
 public class RegisterController {
     
-        public static boolean addNewCustomer(String firstName, String lastName,String CNP,String series, int number, String IBAN, int pin){
+        public  boolean addNewCustomer(String firstName, String lastName,String CNP,String series, int number, String IBAN, int pin){
         String url="jdbc:derby://localhost:1527/NationalRailways";
         try{
             Connection con=DriverManager.getConnection(url,"andrei","andrei");

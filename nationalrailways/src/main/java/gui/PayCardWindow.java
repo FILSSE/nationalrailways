@@ -10,6 +10,7 @@
  */
 package gui;
 
+import nationalrailways.MyController;
 import businesslogic.PayCardController;
 
 /**
@@ -143,10 +144,10 @@ public class PayCardWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean success;
         if(realCnp.compareTo("")==0){
-            success=PayCardController.checkCard(jTextField1.getText(), Integer.parseInt(jTextField2.getText()));
+            success=MyController.context.getPayCardController().checkCard(jTextField1.getText(), Integer.parseInt(jTextField2.getText()));
         }
         else{
-            success=PayCardController.checkCard(realCnp, Integer.parseInt(jTextField2.getText()));
+            success=MyController.context.getPayCardController().checkCard(realCnp, Integer.parseInt(jTextField2.getText()));
         }
         if(success){
             PrintTicketWindow ptw=new PrintTicketWindow(status,cnp);

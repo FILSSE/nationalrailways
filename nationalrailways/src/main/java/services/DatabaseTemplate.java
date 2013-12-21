@@ -8,4 +8,6 @@ public interface DatabaseTemplate {
 	public  boolean checkCard(String cnp,int pin);
 	public  void runSql(String sql) throws SQLException;
 	public int getInt(String sql) throws SQLException;
+	public void deleteCustomer(String cnp)throws SQLException;
+	public void deleteRoute(int trainId)throws SQLException;
 }

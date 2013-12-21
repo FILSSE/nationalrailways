@@ -13,12 +13,13 @@ import java.sql.Statement;
  */
 public class RegisterController {
     
-        public  boolean addNewCustomer(String firstName, String lastName,String CNP,String series, int number, String IBAN, int pin){
+        public  boolean addNewCustomer(String firstName, String lastName,String CNP,String series, String number, String IBAN, int pin){
         String url="jdbc:derby://localhost:1527/NationalRailways";
         try{
             Connection con=DriverManager.getConnection(url,"andrei","andrei");
             Statement instr=con.createStatement();
-            String sql="INSERT INTO app.customer VALUES('"+firstName+"', '"+lastName+"', '"+CNP+"', '"+series+"', "+number+", '"+IBAN+"', "+pin+" )";
+            String sql="INSERT INTO app.customer (FIRSTNAME, LASTNAME, CNP , SERIES , NUMBER , IBAN , PIN )" +
+            		" VALUES('"+firstName+"', '"+lastName+"', '"+CNP+"', '"+series+"', '"+number+"', '"+IBAN+"', "+pin+" )";
             instr.executeUpdate(sql);
             instr.close();
             con.close();

@@ -192,7 +192,7 @@ public class RegisterWindow extends javax.swing.JFrame {
             iban=jTextField5.getText();
             pin=Integer.parseInt(jTextField6.getText());                                        
         }
-        MyController.context.getRegisterController().addNewCustomer(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText(), Integer.parseInt(jTextField7.getText()), iban, pin);
+        MyController.context.getRegisterController().addNewCustomer(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), jTextField4.getText(), jTextField7.getText(), iban, pin);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

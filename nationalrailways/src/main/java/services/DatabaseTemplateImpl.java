@@ -108,4 +108,28 @@ public class DatabaseTemplateImpl implements DatabaseTemplate{
 		}
 		super.finalize();
 	}
+
+	@Override
+	public void deleteCustomer(String cnp) throws SQLException {
+		Statement instr=con.createStatement();
+		try {
+            String sql="delete FROM app.customer l WHERE cnp='"+cnp+"'";
+			instr.executeUpdate(sql);
+		} finally {
+			instr.close();
+		}
+		
+	}
+	
+	@Override
+	public void deleteRoute(int trainId) throws SQLException {
+		Statement instr=con.createStatement();
+		try {
+            String sql="delete FROM  APP.ROUTE l WHERE IDTRAIN="+trainId+"";
+			instr.executeUpdate(sql);
+		} finally {
+			instr.close();
+		}
+		
+	}
 }

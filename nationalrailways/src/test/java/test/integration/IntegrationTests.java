@@ -1,30 +1,20 @@
-package integration;
-
-import static org.easymock.EasyMock.anyString;
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.createNiceMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
+package test.integration;
 
 import java.sql.SQLException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import nationalrailways.MyController;
 
-import org.easymock.EasyMock;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
-import services.DatabaseTemplate;
-import businesslogic.ApplicationContext;
-import businesslogic.BookingController;
+import config.IntegrationTesting;
 import domain.Route;
 import domain.Ticket;
 import domain.Train;
-
+@Category(IntegrationTesting.class)
 public class IntegrationTests {
 	private final static Logger log = Logger.getLogger("IntegrationTests");
 	public final static int CAPACITY = 300;

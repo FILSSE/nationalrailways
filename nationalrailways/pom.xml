@@ -20,7 +20,6 @@
 				<configuration>
 					<parallel>methods</parallel>
 					<threadCount>10</threadCount>
-					<groups>config.UnitTesting, config.BusinessLogicTesting</groups>
 					<includes>
 						<include>/tests/**</include>
 					</includes>

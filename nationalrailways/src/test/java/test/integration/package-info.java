@@ -5,4 +5,4 @@
  * @author Tenesh
  *
  */
-package integration;
+package test.integration;

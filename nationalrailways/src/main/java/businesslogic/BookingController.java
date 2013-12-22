@@ -101,7 +101,7 @@ public class BookingController {
             return true;
         }
         catch(Exception e){
-            System.out.println("Exception:"+e.getMessage());
+            System.out.println("Exception:"+e);
             return false;
         }  
     }

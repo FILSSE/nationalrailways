@@ -108,7 +108,18 @@ public class DatabaseTemplateImpl implements DatabaseTemplate{
 		}
 		super.finalize();
 	}
-
+	
+	@Override
+	public void deleteAllCustomer() throws SQLException {
+		Statement instr=con.createStatement();
+		try {
+            String sql="delete FROM app.customer l WHERE 1=1";
+			instr.executeUpdate(sql);
+		} finally {
+			instr.close();
+		}
+		
+	}
 	@Override
 	public void deleteCustomer(String cnp) throws SQLException {
 		Statement instr=con.createStatement();

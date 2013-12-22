@@ -54,7 +54,7 @@ public class BookingControllerTests {
 		expect(route.getTrain()).andReturn(train).anyTimes();
 		replay(databaseTemplate, ticket, route, train);
 		int after = bookingController.updateRouteTicket(ticket);
-		verify(databaseTemplate);
+		verify(databaseTemplate, ticket, route);
 		Assert.assertEquals(available-1, after);
 	}
 	

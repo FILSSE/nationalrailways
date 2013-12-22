@@ -8,6 +8,8 @@ import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import nationalrailways.MyController;
 
@@ -24,13 +26,12 @@ import domain.Ticket;
 import domain.Train;
 
 public class IntegrationTests {
-
+	private final static Logger log = Logger.getLogger("IntegrationTests");
+	public final static int CAPACITY = 300;
 
 	// test object
 	MyController myController;
 	
-	// mocked objects
-	DatabaseTemplate databaseTemplate;
 	Ticket ticket;
 	Route route;
 	Train train;
@@ -52,6 +53,38 @@ public class IntegrationTests {
 		boolean _true = MyController.context.getCashierController().checkCustomer(CNP);
 		Assert.assertTrue(_true);
 		MyController.context.getDatabaseTemplate().deleteCustomer(CNP);
+		
+
+	}
+	
+	@Test
+	public void testCleanCustomers() throws SQLException {
+		MyController.context.getDatabaseTemplate().deleteAllCustomer();
+	}
+	
+	@Test
+	public void testCapacity() throws SQLException {
+		String firstName = "Mihaita";
+		String lastName = "Tinta";
+		String CNP = "11122222222";
+		String series ="SZ99999";
+		String number = "12231";
+		String IBAN = "RO33ING2832832";
+		int pin = 2222;
+		System.out.println( "testCapacity - start");
+		for (int i = 0;i<CAPACITY;i++) {
+			System.out.println( "testCapacity - " + i);
+			MyController.context.getRegisterController().addNewCustomer(firstName, lastName, CNP + i, series, number, IBAN, pin);
+			boolean _true = MyController.context.getCashierController().checkCustomer( CNP + i);
+			Assert.assertTrue(_true);
+		}
+		System.out.println( "testCapacity - stop");
+		System.out.println( "testCapacity - clean start");
+		for (int i = 0;i<CAPACITY;i++) {
+			System.out.println( "testCapacity - clean " + i);
+			MyController.context.getDatabaseTemplate().deleteCustomer(CNP + i);
+		}
+		System.out.println( "testCapacity - clean stop");
 		
 
 	}
